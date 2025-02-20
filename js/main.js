@@ -1,4 +1,12 @@
-document.addEventListener("DOMContentLoaded", loadNotes);
+document.addEventListener("DOMContentLoaded", () => {
+    loadNotes();
+    initializeInputs();
+});
+
+function initializeInputs() {
+    document.getElementById("noteWidth").value = 180;
+    document.getElementById("noteHeight").value = 150;
+}
 
 function addNote(text = "", width = null, height = null) {
     const note = document.createElement("div");
@@ -25,6 +33,7 @@ function addNote(text = "", width = null, height = null) {
     
     document.getElementById("noteGrid").appendChild(note);
     saveNotes();
+    adjustGridLayout();
 }
 
 function updateNoteSize(note, width, height) {
@@ -49,11 +58,10 @@ function loadNotes() {
     noteGrid.innerHTML = "";
     
     if (notes.length > 0) {
-        document.getElementById("noteWidth").value = parseInt(notes[0].width);
-        document.getElementById("noteHeight").value = parseInt(notes[0].height);
+        notes.forEach(note => addNote(note.text, note.width, note.height));
+    } else {
+        initializeInputs();
     }
-    
-    notes.forEach(note => addNote(note.text, note.width, note.height));
     adjustGridLayout();
 }
 
@@ -67,8 +75,9 @@ function copyNotesToClipboard() {
 
 function adjustGridLayout() {
     const grid = document.getElementById("noteGrid");
-    const minWidth = Math.min(...Array.from(document.querySelectorAll(".note")).map(note => parseInt(note.style.width)));
-    if (grid) {
+    const notes = document.querySelectorAll(".note");
+    if (grid && notes.length > 0) {
+        const minWidth = Math.min(...Array.from(notes).map(note => parseInt(note.style.width)));
         grid.style.gridTemplateColumns = `repeat(auto-fill, minmax(${minWidth}px, 1fr))`;
     }
 }
@@ -93,6 +102,3 @@ document.getElementById("updateNotesButton").onclick = updateNotesSize;
 document.getElementById("saveNotesButton").onclick = copyNotesToClipboard;
 
 window.addEventListener("resize", adjustGridLayout);
-
-// Initial layout adjustment
-adjustGridLayout();
