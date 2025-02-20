@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+    overflow-y: auto;
+    padding: 20px;
+    margin: 0;
+}
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.grid-container {
+    width: 80vw;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    width: 100%;
+    padding: 20px;
+}
+.note {
+    background: white;
+    border: 2px solid lightblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    padding: 10px;
+    position: relative;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+.note-content {
+    flex-grow: 1;
+    width: 100%;
+    padding: 5px;
+    overflow: auto;
+    outline: none;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+}
+#addNoteButton, #saveNotesButton {
+    min-width: 150px;
+    height: 40px;
+    font-size: 16px;
+    background: white;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+#noteWidth, #noteHeight {
+    width: 100px;
+}
+#noteGrid {
+    display: grid;
+    gap: 15px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}

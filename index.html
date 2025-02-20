@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Grid</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="controls">
+        <button id="addNoteButton" onclick="addNote()">+</button>
+        <button id="saveNotesButton" onclick="copyNotesToClipboard()">Save All Notes to Clipboard</button>
+        <input type="number" id="noteWidth" placeholder="Width (px)" min="100" value="180">
+        <input type="number" id="noteHeight" placeholder="Height (px)" min="100" value="150">
+        <button id="updateNotesButton">Update Notes Size</button>
+    </div>
+    <div class="grid-container">
+        <div class="grid" id="noteGrid"></div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
