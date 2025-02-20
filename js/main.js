@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadNotes();
     initializeInputs();
+    initializeGrid();
+    loadNotes();
 });
 
 function initializeInputs() {
@@ -8,9 +9,17 @@ function initializeInputs() {
     document.getElementById("noteHeight").value = 150;
 }
 
-function addNote(text = "", width = null, height = null) {
+function initializeGrid() {
+    const grid = document.getElementById("noteGrid");
+    grid.style.gridTemplateColumns = "repeat(auto-fill, minmax(180px, 1fr))";
+    grid.style.gap = "15px";
+}
+
+function addNote(text = "", width = "180px", height = "150px") {
     const note = document.createElement("div");
     note.className = "note";
+    note.style.width = width;
+    note.style.height = height;
     
     const noteContent = document.createElement("div");
     noteContent.className = "note-content";
@@ -30,11 +39,12 @@ function addNote(text = "", width = null, height = null) {
     note.appendChild(deleteBtn);
     
     updateNoteSize(note, width, height);
-    
+
     document.getElementById("noteGrid").appendChild(note);
     saveNotes();
     adjustGridLayout();
 }
+
 
 function updateNoteSize(note, width, height) {
     width = width || note.style.width || "180px";
@@ -58,12 +68,13 @@ function loadNotes() {
     noteGrid.innerHTML = "";
     
     if (notes.length > 0) {
-        notes.forEach(note => addNote(note.text, note.width, note.height));
+        notes.forEach(note => addNote(note.text, note.width || "180px", note.height || "150px"));
     } else {
         initializeInputs();
     }
     adjustGridLayout();
 }
+
 
 function copyNotesToClipboard() {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -77,7 +88,7 @@ function adjustGridLayout() {
     const grid = document.getElementById("noteGrid");
     const notes = document.querySelectorAll(".note");
     if (grid && notes.length > 0) {
-        const minWidth = Math.min(...Array.from(notes).map(note => parseInt(note.style.width)));
+        const minWidth = Math.max(180, ...Array.from(notes).map(note => parseInt(note.style.width)));
         grid.style.gridTemplateColumns = `repeat(auto-fill, minmax(${minWidth}px, 1fr))`;
     }
 }
